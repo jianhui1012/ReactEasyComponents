@@ -1,0 +1,3 @@
+rootProject.name = 'ReactEasyComponents'
+
+include ':app'
