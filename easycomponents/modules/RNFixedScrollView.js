@@ -846,18 +846,11 @@ if (Platform.OS === 'android') {
     }
   };
   AndroidScrollView = requireNativeComponent(
-    'RNScrollView',
+    'RNFixedScrollView',
     (ScrollView: React.ComponentType<any>),
     nativeOnlyProps
   );
-  AndroidHorizontalScrollView = requireNativeComponent(
-    'AndroidHorizontalScrollView',
-    (ScrollView: React.ComponentType<any>),
-    nativeOnlyProps
-  );
-  AndroidHorizontalScrollContentView = requireNativeComponent(
-    'AndroidHorizontalScrollContentView'
-  );
+
 } else if (Platform.OS === 'ios') {
   nativeOnlyProps = {
     nativeOnly: {
@@ -868,11 +861,11 @@ if (Platform.OS === 'android') {
     }
   };
   RCTScrollView = requireNativeComponent(
-    'RNScrollView',
+    'RNFixedScrollView',
     (ScrollView: React.ComponentType<any>),
     nativeOnlyProps,
   );
-  RCTScrollContentView = requireNativeComponent('RNScrollView', View);
+  RCTScrollContentView = requireNativeComponent('RNFixedScrollView', View);
 }
 
 module.exports = ScrollView;

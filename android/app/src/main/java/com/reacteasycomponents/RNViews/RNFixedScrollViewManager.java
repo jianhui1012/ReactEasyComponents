@@ -24,12 +24,13 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.views.scroll.FpsListener;
 import com.facebook.react.views.scroll.ReactHorizontalScrollView;
-import com.facebook.react.views.scroll.ReactScrollView;
 import com.facebook.react.views.scroll.ReactScrollViewCommandHelper;
 import com.facebook.react.views.scroll.ReactScrollViewHelper;
 import com.facebook.react.views.scroll.ScrollEventType;
 import com.facebook.yoga.YogaConstants;
+
 import java.util.Map;
+
 import javax.annotation.Nullable;
 
 
@@ -44,7 +45,7 @@ public class RNFixedScrollViewManager
         extends ViewGroupManager<RNFixedScrollView>
         implements ReactScrollViewCommandHelper.ScrollCommandHandler<RNFixedScrollView> {
 
-  protected static final String REACT_CLASS = "RCTScrollView";
+  protected static final String REACT_CLASS = "RNFixedScrollView";
 
   private static final int[] SPACING_TYPES = {
           Spacing.ALL, Spacing.LEFT, Spacing.RIGHT, Spacing.TOP, Spacing.BOTTOM,
@@ -72,17 +73,17 @@ public class RNFixedScrollViewManager
   }
 
   @ReactProp(name = "scrollEnabled", defaultBoolean = true)
-  public void setScrollEnabled(ReactScrollView view, boolean value) {
+  public void setScrollEnabled(RNFixedScrollView view, boolean value) {
     view.setScrollEnabled(value);
   }
 
   @ReactProp(name = "showsVerticalScrollIndicator")
-  public void setShowsVerticalScrollIndicator(ReactScrollView view, boolean value) {
+  public void setShowsVerticalScrollIndicator(RNFixedScrollView view, boolean value) {
     view.setVerticalScrollBarEnabled(value);
   }
 
   @ReactProp(name = ReactClippingViewGroupHelper.PROP_REMOVE_CLIPPED_SUBVIEWS)
-  public void setRemoveClippedSubviews(ReactScrollView view, boolean removeClippedSubviews) {
+  public void setRemoveClippedSubviews(RNFixedScrollView view, boolean removeClippedSubviews) {
     view.setRemoveClippedSubviews(removeClippedSubviews);
   }
 
@@ -95,7 +96,7 @@ public class RNFixedScrollViewManager
    * @param sendMomentumEvents
    */
   @ReactProp(name = "sendMomentumEvents")
-  public void setSendMomentumEvents(ReactScrollView view, boolean sendMomentumEvents) {
+  public void setSendMomentumEvents(RNFixedScrollView view, boolean sendMomentumEvents) {
     view.setSendMomentumEvents(sendMomentumEvents);
   }
 
@@ -107,7 +108,7 @@ public class RNFixedScrollViewManager
    * @param scrollPerfTag
    */
   @ReactProp(name = "scrollPerfTag")
-  public void setScrollPerfTag(ReactScrollView view, String scrollPerfTag) {
+  public void setScrollPerfTag(RNFixedScrollView view, String scrollPerfTag) {
     view.setScrollPerfTag(scrollPerfTag);
   }
 
@@ -118,7 +119,7 @@ public class RNFixedScrollViewManager
    * @param color
    */
   @ReactProp(name = "endFillColor", defaultInt = Color.TRANSPARENT, customType = "Color")
-  public void setBottomFillColor(ReactScrollView view, int color) {
+  public void setBottomFillColor(RNFixedScrollView view, int color) {
     view.setEndFillColor(color);
   }
 
@@ -126,7 +127,7 @@ public class RNFixedScrollViewManager
    * Controls overScroll behaviour
    */
   @ReactProp(name = "overScrollMode")
-  public void setOverScrollMode(ReactScrollView view, String value) {
+  public void setOverScrollMode(RNFixedScrollView view, String value) {
     view.setOverScrollMode(ReactScrollViewHelper.parseOverScrollMode(value));
   }
 
@@ -164,7 +165,7 @@ public class RNFixedScrollViewManager
           ViewProps.BORDER_BOTTOM_RIGHT_RADIUS,
           ViewProps.BORDER_BOTTOM_LEFT_RADIUS
   }, defaultFloat = YogaConstants.UNDEFINED)
-  public void setBorderRadius(ReactScrollView view, int index, float borderRadius) {
+  public void setBorderRadius(RNFixedScrollView view, int index, float borderRadius) {
     if (!YogaConstants.isUndefined(borderRadius)) {
       borderRadius = PixelUtil.toPixelFromDIP(borderRadius);
     }
@@ -177,7 +178,7 @@ public class RNFixedScrollViewManager
   }
 
   @ReactProp(name = "borderStyle")
-  public void setBorderStyle(ReactScrollView view, @Nullable String borderStyle) {
+  public void setBorderStyle(RNFixedScrollView view, @Nullable String borderStyle) {
     view.setBorderStyle(borderStyle);
   }
 
@@ -188,7 +189,7 @@ public class RNFixedScrollViewManager
           ViewProps.BORDER_TOP_WIDTH,
           ViewProps.BORDER_BOTTOM_WIDTH,
   }, defaultFloat = YogaConstants.UNDEFINED)
-  public void setBorderWidth(ReactScrollView view, int index, float width) {
+  public void setBorderWidth(RNFixedScrollView view, int index, float width) {
     if (!YogaConstants.isUndefined(width)) {
       width = PixelUtil.toPixelFromDIP(width);
     }
@@ -198,7 +199,7 @@ public class RNFixedScrollViewManager
   @ReactPropGroup(names = {
           "borderColor", "borderLeftColor", "borderRightColor", "borderTopColor", "borderBottomColor"
   }, customType = "Color")
-  public void setBorderColor(ReactScrollView view, int index, Integer color) {
+  public void setBorderColor(RNFixedScrollView view, int index, Integer color) {
     float rgbComponent =
             color == null ? YogaConstants.UNDEFINED : (float) ((int)color & 0x00FFFFFF);
     float alphaComponent = color == null ? YogaConstants.UNDEFINED : (float) ((int)color >>> 24);
