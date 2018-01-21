@@ -25,13 +25,15 @@ import com.facebook.react.views.scroll.ReactHorizontalScrollView;
 import com.facebook.react.views.scroll.ReactScrollViewHelper;
 import com.facebook.react.views.scroll.VelocityHelper;
 import com.facebook.react.views.view.ReactViewBackgroundManager;
+
 import java.lang.reflect.Field;
+
 import javax.annotation.Nullable;
 
 /**
  * A simple subclass of ScrollView that doesn't dispatch measure and layout to its children and has
  * a scroll listener to send scroll events to JS.
- *
+ * <p>
  * <p>ReactScrollView only supports vertical scrolling. For horizontal scrolling,
  * use {@link ReactHorizontalScrollView}.
  */
@@ -44,7 +46,8 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
     private final OverScroller mScroller;
     private final VelocityHelper mVelocityHelper = new VelocityHelper();
 
-    private @Nullable
+    private
+    @Nullable
     Rect mClippingRect;
     private boolean mDoneFlinging;
     private boolean mDragging;
@@ -52,10 +55,14 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
     private boolean mRemoveClippedSubviews;
     private boolean mScrollEnabled = true;
     private boolean mSendMomentumEvents;
-    private @Nullable
+    private
+    @Nullable
     FpsListener mFpsListener = null;
-    private @Nullable String mScrollPerfTag;
-    private @Nullable
+    private
+    @Nullable
+    String mScrollPerfTag;
+    private
+    @Nullable
     Drawable mEndBackground;
     private int mEndFillColor = Color.TRANSPARENT;
     private View mContentView;
@@ -66,6 +73,7 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
     private int measureWidth;
     private float x1, x2, y1, y2;
     private ScrollView scrollView = null;
+    private static final int FLING_MIN_DISTANCE = 5;
 
     public RNFixedScrollView(ReactContext context) {
         this(context, null);
@@ -128,28 +136,26 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
         }
 
         if ((action == MotionEvent.ACTION_MOVE) || (action == MotionEvent.ACTION_UP)) {
-            //当手指移动或者抬起的时候计算其值
-            x2 = ev.getX();
-            y2 = ev.getY();
-            //是否到底部 默认为已到底部
-            isbottom = isAtBottom();
-            //向上移动
-            if (y1 - y2 > 0) {
-                if (scrollView != null) {
-                    int st = scrollView.getScrollY();
+            if (scrollView != null) {
+                //当手指移动或者抬起的时候计算其值
+                x2 = ev.getX();
+                y2 = ev.getY();
+                //是否到底部 默认为已到底部
+                isbottom = isAtBottom();
+                //向上滑动
+                if (y1 - y2 > FLING_MIN_DISTANCE ) {
                     if (!isbottom) {
                         isIntercept = true;
-                    } else if (isbottom) {
+                    } else {
                         isIntercept = false;
                     }
                     return isIntercept;
-                }
-            } else if (y2 - y1 > 0) {
-                if (scrollView != null) {
+                } //向下滑动
+                else if (y2 - y1 > FLING_MIN_DISTANCE ) {
                     int st = scrollView.getScrollY();
                     if (!isbottom) {
                         isIntercept = true;
-                    } else if (isbottom) {
+                    } else {
                         if (st == 0) {
                             isIntercept = true;
                         } else {
@@ -168,7 +174,7 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
             enableFpsListener();
             return true;
         }
-        return isIntercept;
+        return false;
     }
 
     /**
@@ -271,7 +277,6 @@ public class RNFixedScrollView extends ScrollView implements ReactClippingViewGr
                     mOnScrollDispatchHelper.getYFlingVelocity());
         }
     }
-
 
 
     @Override

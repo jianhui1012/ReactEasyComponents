@@ -39,9 +39,12 @@ export default class ViewPagerPage extends Component {
         return (
 
                 <IndicatorViewPager
-                    style={{flex: 1, backgroundColor: 'white', flexDirection: 'column-reverse'}}
+                    style={[{backgroundColor: 'white', flexDirection: 'column-reverse'},this.props.style]}
                     indicator={this._renderTitleIndicator()}
                 >
+                    <View style={{backgroundColor: 'cornflowerblue'}}>
+                        <Text>这里是课程介绍</Text>
+                    </View>
                     <View style={{backgroundColor: 'cadetblue'}}>
                         <FlatList
                             ItemSeparatorComponent={() => <View
@@ -51,14 +54,11 @@ export default class ViewPagerPage extends Component {
                             onEndReachedThreshold={0.2}
                             renderItem={({item}) => <View
                                 style={{  justifyContent: 'center',height:40,alignItems:'center'}}><Text
-                                style={{fontSize: 16}}>{item.key}</Text></View>}
+                                style={{fontSize: 16}}>{"目录"+item.key}</Text></View>}
                         />
                     </View>
-                    <View style={{backgroundColor: 'cornflowerblue'}}>
-                        <Text>page two</Text>
-                    </View>
                     <View style={{backgroundColor: '#1AA094'}}>
-                        <Text>page three</Text>
+                        <Text>相关课程</Text>
                     </View>
                 </IndicatorViewPager>
 
@@ -70,7 +70,7 @@ export default class ViewPagerPage extends Component {
             backgroundColor: 0x00000020,
             height: 48
         }} trackScroll={true} itemStyle={{width: windowWidth / 3}}
-                                    selectedItemStyle={{width: windowWidth / 3}} titles={['one', 'two', 'three']}/>;
+                                    selectedItemStyle={{width: windowWidth / 3}} titles={['详情介绍', '目录', '相关课程']}/>;
     }
 
 
